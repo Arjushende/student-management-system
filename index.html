@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Student Management System</h1>
+  <button id="addStudentBtn" class="btn btn-primary">+ Add Student</button>
+</header>
+
+<main class="container">
+
+  <!-- Search / filter / sort controls -->
+  <section class="toolbar">
+    <input type="text" id="searchInput" placeholder="Search by name or email...">
+
+    <select id="departmentFilter">
+      <option value="">All Departments</option>
+    </select>
+
+    <select id="statusFilter">
+      <option value="">All Statuses</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+      <option value="graduated">Graduated</option>
+    </select>
+
+    <select id="sortBy">
+      <option value="created_at">Sort: Newest</option>
+      <option value="first_name">Sort: First Name</option>
+      <option value="last_name">Sort: Last Name</option>
+      <option value="email">Sort: Email</option>
+      <option value="enrollment_date">Sort: Enrollment Date</option>
+    </select>
+
+    <button id="orderToggle" class="btn btn-secondary" data-order="desc">↓ Desc</button>
+  </section>
+
+  <!-- Results table -->
+  <section class="table-wrap">
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Enrolled</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody">
+        <!-- rows injected by app.js -->
+      </tbody>
+    </table>
+    <p id="emptyState" class="empty-state hidden">No students found.</p>
+  </section>
+
+  <!-- Pagination -->
+  <section class="pagination">
+    <button id="prevPage" class="btn btn-secondary">← Prev</button>
+    <span id="pageInfo">Page 1</span>
+    <button id="nextPage" class="btn btn-secondary">Next →</button>
+  </section>
+
+</main>
+
+<!-- Add / Edit Student Modal -->
+<div id="studentModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Add Student</h2>
+      <button id="closeModal" class="btn-icon" aria-label="Close">&times;</button>
+    </div>
+
+    <form id="studentForm" novalidate>
+      <input type="hidden" id="studentId">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" name="first_name" required maxlength="50">
+          <span class="error-msg" data-for="first_name"></span>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" name="last_name" required maxlength="50">
+          <span class="error-msg" data-for="last_name"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required maxlength="120">
+        <span class="error-msg" data-for="email"></span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 555 123 4567">
+          <span class="error-msg" data-for="phone"></span>
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="date_of_birth">
+          <span class="error-msg" data-for="date_of_birth"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="department">Department</label>
+          <select id="department" name="department_id">
+            <option value="">-- None --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="graduated">Graduated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" id="cancelForm" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast for feedback -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
